@@ -280,7 +280,7 @@ if get_option('tests').enabled()
 
   e = executable('amdgpu', 'tests/test_amdgpu.cpp',
     files(
-      'src/amdgpu.cpp',
+      'src/amdgpu_metrics.cpp',
       'src/cpu.cpp',
       'src/gpu.cpp',
       'src/mesa/util/os_time.c',
