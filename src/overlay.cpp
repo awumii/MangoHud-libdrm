@@ -134,7 +134,6 @@ void update_hw_info(const struct overlay_params& params, uint32_t vendorID)
 #ifdef __linux__
       if (gpu_metrics_exists)
          amdgpu_get_metrics(deviceID);
-#endif
       if (do_libdrm_sampling)
          libdrm_get_info();
 #endif
