@@ -18,7 +18,7 @@
 #include "mangoapp_proto.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "amdgpu.h"
+#include "amdgpu_metrics.h"
 #ifdef __linux__
 #include "implot.h"
 #endif
