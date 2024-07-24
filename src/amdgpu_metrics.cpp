@@ -3,7 +3,7 @@
 #ifdef __linux__
 #include <sys/sysinfo.h>
 #endif
-#include "amdgpu.h"
+#include "amdgpu_metrics.h"
 #include "gpu.h"
 #include "cpu.h"
 #include "overlay.h"

@@ -89,7 +89,7 @@ if is_unixy
     'battery.cpp',
     'control.cpp',
     'device.cpp',
-    'amdgpu.cpp',
+    'amdgpu_metrics.cpp',
     'amdgpu_libdrm.cpp',
     'intel.cpp',
     'msm.cpp',
