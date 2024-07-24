@@ -116,6 +116,7 @@ endif
 
 inc_common = [
     include_directories('include'),
+    include_directories('/usr/include/libdrm')
 ]
 
 dep_pthread = dependency('threads')
