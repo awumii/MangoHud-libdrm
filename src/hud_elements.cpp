@@ -23,7 +23,7 @@
 #ifdef __linux__
 #include "implot.h"
 #endif
-#include "amdgpu.h"
+#include "amdgpu_metrics.h"
 #include "fps_metrics.h"
 
 #define CHAR_CELSIUS    "\xe2\x84\x83"

@@ -6,7 +6,7 @@ extern "C" {
 #include <cmocka.h>
 }
 #include "stdio.h"
-#include "../src/amdgpu.h"
+#include "../src/amdgpu_metrics.h"
 #include "../src/cpu.h"
 
 #define UNUSED(x) (void)(x)

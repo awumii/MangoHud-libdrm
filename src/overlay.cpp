@@ -22,7 +22,8 @@
 #include "file_utils.h"
 #include "pci_ids.h"
 #include "iostats.h"
-#include "amdgpu.h"
+#include "amdgpu_metrics.h"
+#include "amdgpu_libdrm.h"
 #include "fps_metrics.h"
 #include "intel.h"
 #include "msm.h"
@@ -133,6 +134,8 @@ void update_hw_info(const struct overlay_params& params, uint32_t vendorID)
 #ifdef __linux__
       if (gpu_metrics_exists)
          amdgpu_get_metrics(deviceID);
+      if (do_libdrm_sampling)
+         libdrm_get_info();
 #endif
       if (vendorID == 0x10de)
          getNvidiaGpuInfo(params);
@@ -963,6 +966,12 @@ void init_gpu_stats(uint32_t& vendorID, uint32_t reported_deviceID, overlay_para
             }
          }
          break;
+      }
+
+      if (params.enabled[OVERLAY_PARAM_ENABLED_libdrm_sampling]) {
+         do_libdrm_sampling = true;
+         dri_device_path = string("/dev/dri") + path.substr(path.find_last_of("/"));
+         SPDLOG_INFO("Using DRI device for libdrm sampling: '{}'", dri_device_path);
       }
 
       // don't bother then

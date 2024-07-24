@@ -13,7 +13,8 @@
 #include "nvidia_info.h"
 #endif
 
-#include "amdgpu.h"
+#include "amdgpu_metrics.h"
+#include "amdgpu_libdrm.h"
 
 using namespace std::chrono_literals;
 
@@ -89,7 +90,7 @@ void getAmdGpuInfo(){
 #ifdef __linux__
     int64_t value = 0;
     if (metrics_path.empty()){
-        if (amdgpu.busy) {
+        if (!do_libdrm_sampling && amdgpu.busy) {
             rewind(amdgpu.busy);
             fflush(amdgpu.busy);
             int value = 0;
