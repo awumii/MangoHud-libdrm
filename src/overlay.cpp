@@ -164,6 +164,7 @@ void update_hw_info(const struct overlay_params& params, uint32_t vendorID)
       getIoStats(g_io_stats);
 #endif
 
+   std::lock_guard<std::mutex> l(currentLogDataMutex); // LatencyFlex
    currentLogData.gpu_load = gpu_info.load;
    currentLogData.gpu_temp = gpu_info.temp;
    currentLogData.gpu_core_clock = gpu_info.CoreClock;
@@ -259,6 +260,17 @@ void update_hud_info_with_frametime(struct swapchain_stats& sw_stats, const stru
       frametime_data.push_back(frametime_ms);
       frametime_data.erase(frametime_data.begin());
    }
+
+   // LatencyFlex start
+   std::lock_guard<std::mutex> l(currentLogDataMutex);
+   // Save data for graphs
+   if (graph_data.size() >= kMaxGraphEntries)
+       graph_data.pop_front();
+   graph_data.push_back(currentLogData);
+   logger->notify_data_valid();
+   HUDElements.update_exec();
+   // LatencyFlex end
+
 #ifdef __linux__
    if (throttling)
       throttling->update();

@@ -20,6 +20,7 @@ logData currentLogData = {};
 std::unique_ptr<Logger> logger;
 ofstream output_file;
 std::thread log_thread;
+std::mutex currentLogDataMutex; // LatencyFlex
 
 string exec(string command) {
 #ifndef _WIN32
@@ -296,10 +297,21 @@ void Logger::try_log() {
   auto now = Clock::now();
   auto elapsedLog = now - m_log_start;
 
-  currentLogData.previous = elapsedLog;
+  // LatencyFlex start
+  {
+    std::lock_guard<std::mutex> l(currentLogDataMutex);
+    currentLogData.previous = elapsedLog;
+    currentLogData.fps = 1000.f / (frametime / 1000.f);
+    currentLogData.frametime = frametime;
+    m_log_array.push_back(currentLogData);
+  }
+  /* currentLogData.previous = elapsedLog;
   currentLogData.fps = fps;
   currentLogData.frametime = frametime;
-  m_log_array.push_back(currentLogData);
+  m_log_array.push_back(currentLogData); */
+  
+  // LatencyFlex end
+
   writeToFile();
 
   if(log_duration && (elapsedLog >= std::chrono::seconds(log_duration))){
